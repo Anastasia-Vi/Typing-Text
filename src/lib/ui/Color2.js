@@ -1,0 +1,1 @@
+export { default as Color2 } from "./Color2/Color2.svelte"
