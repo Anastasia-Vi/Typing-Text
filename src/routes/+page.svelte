@@ -62,7 +62,7 @@
        <div>
         <ul>
           {#each scores as score}
-            <li> Score: {score.time} seconds - {new Date(score.now).toLocaleString()} </li>
+            <li> Score: {score.time} seconds at the time of {new Date(score.now).toLocaleString()} </li>
           {/each}
         </ul>
       </Card>
