@@ -51,6 +51,7 @@
   }
   function on_key_down(event){
     event.preventDefault();
+    if(!event.key) return;
     input = input + event.key;
     if (input.length > 0) {
       if (input.length === 1) {
