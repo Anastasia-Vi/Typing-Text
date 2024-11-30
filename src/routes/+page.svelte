@@ -64,6 +64,7 @@
         <Card col={12}>
           <h1 class="title">Typing Test</h1>
           <div class="letters">{letters.join('')}</div>
+          <input type="text"/>
           <div class="controls">
             {#if started === false}
               <button class="btn" on:click={start}>Start</button>
