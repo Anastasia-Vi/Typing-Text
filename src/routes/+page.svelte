@@ -8,15 +8,14 @@
   let timer = $state(0);
   let intervalId;
   let scores = $state(browser ? JSON.parse(localStorage.getItem('typingScores')) || [] : []);
+  let input = $state('');
   $effect(() => {
-    console.log(letters);
+    if (input.length > 0) {
+      on_key_up(input[input.length - 1]);
+    }
   })
-  function on_key_up(event) {
-  }
-  function on_key_down(event){
-    event.preventDefault();
-    let key = event.key.toLowerCase();
-    console.log(event.key);
+  function on_key_up(letter) {
+    let key = letter.toLowerCase();
     if (started === false) {
       if(key === ' ') {
         start();
@@ -36,6 +35,7 @@
       }
     }
   }
+ 
   function start() {
     letters = text.toLowerCase().split('');
     started = true;
@@ -56,20 +56,17 @@
   });
 </script>
 
-<svelte:window
-    on:keyup={on_key_up} on:keydown={on_key_down}
-/>
   <Row>
     <Grid>
         <Card col={12}>
           <h1 class="title">Typing Test</h1>
           <div class="letters">{letters.join('')}</div>
-          <input type="text"/>
+          <input type="text" bind:value={input}/>
           <div class="controls">
             {#if started === false}
-              <button class="btn" on:click={start}>Start</button>
+              <button class="btn" onclick={start}>Start</button>
             {/if}
-            <button class="btn" on:click={restart}>Restart</button>
+            <button class="btn" onclick={restart}>Restart</button>
           </div>
           <div class="timer">Time: {timer} seconds</div>
           <div class="scores">
