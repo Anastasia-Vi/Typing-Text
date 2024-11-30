@@ -2,8 +2,8 @@
   import { Card, Grid, Row } from "$lib/ui/Grid";
   import { onDestroy } from "svelte";
   import { browser } from "$app/environment";
-  let text = $state("Chinese Dragon");
-  let letters = $state([]);
+  let text = "Chinese Dragon";
+  let letters = $state(text.toLowerCase().split(''));
   let started = $state(false);
   let timer = $state(0);
   let intervalId;
@@ -11,15 +11,15 @@
   let input = $state('');
   $effect(() => {
     if (input.length > 0) {
+      if (input.length === 1) {
+        start_timer();
+      }
       on_key_up(input[input.length - 1]);
     }
   })
   function on_key_up(letter) {
     let key = letter.toLowerCase();
     if (started === false) {
-      if(key === ' ') {
-        start();
-      }
       return;
     } 
     if (key === letters[0]) {
@@ -35,9 +35,8 @@
       }
     }
   }
- 
-  function start() {
-    letters = text.toLowerCase().split('');
+  function start_timer(){
+    if(intervalId) clearInterval(intervalId);
     started = true;
     timer = 0;
     intervalId = setInterval(() => {//setInterval is a function that calls a function repeatedly at specified intervals
@@ -45,27 +44,39 @@
     }, 10);
   }
   function restart(){
-    started = false;
+    letters = text.toLowerCase().split('');
+    input = '';
     timer = 0;
-    letters = [];
     clearInterval(intervalId);
+  }
+  function on_key_down(event){
+    event.preventDefault();
+    input = input + event.key;
+    if (input.length > 0) {
+      if (input.length === 1) {
+        start_timer();
+      }
+      on_key_up(input[input.length - 1]);
+    }
   }
   // Clean up interval when component is destroyed
   onDestroy(() => {
     if (intervalId) clearInterval(intervalId);
   });
+
 </script>
+
+ <svelte:window 
+ on:keydown={on_key_down}/>
+
 
   <Row>
     <Grid>
         <Card col={12}>
           <h1 class="title">Typing Test</h1>
           <div class="letters">{letters.join('')}</div>
-          <input type="text" bind:value={input}/>
+          <input type="text" bind:value={input} placeholder="Start typing to begin"/>
           <div class="controls">
-            {#if started === false}
-              <button class="btn" onclick={start}>Start</button>
-            {/if}
             <button class="btn" onclick={restart}>Restart</button>
           </div>
           <div class="timer">Time: {timer} seconds</div>
@@ -181,6 +192,11 @@
 
   .title {
     animation: float 3s ease-in-out infinite;
+  }
+  @media (min-width: 768px) {/*If the screen is greater than 768px, hide the input*/
+    input {
+      display: none;
+    }
   }
 </style>
 
