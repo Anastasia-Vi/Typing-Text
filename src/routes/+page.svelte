@@ -27,7 +27,7 @@
       const now = new Date();
       clearInterval(intervalId)
       started = false;
-      scores = [...scores, {time: timer, now: now.getTime()}];
+      scores = [...scores, {time: timer, now: now.getMilliseconds()}];
       scores.sort((a, b) => a.time - b.time);
       localStorage.setItem('typingScores', JSON.stringify(scores));//Save the scores to local storage. setItem tells save variable typingScores the stringified scores
       }
