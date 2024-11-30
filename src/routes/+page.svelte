@@ -12,6 +12,9 @@
     console.log(letters);
   })
   function on_key_up(event) {
+  }
+  function on_key_down(event){
+    event.preventDefault();
     let key = event.key.toLowerCase();
     console.log(event.key);
     if (started === false) {
@@ -32,9 +35,6 @@
       localStorage.setItem('typingScores', JSON.stringify(scores));//Save the scores to local storage. setItem tells save variable typingScores the stringified scores
       }
     }
-  }
-  function on_key_down(event){
-    event.preventDefault();
   }
   function start() {
     letters = text.toLowerCase().split('');
