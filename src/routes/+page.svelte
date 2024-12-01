@@ -2,7 +2,7 @@
   import { Card, Grid, Row } from "$lib/ui/Grid";
   import { onDestroy } from "svelte";
   import { browser } from "$app/environment";
-  let text = "Chinese Dragon";
+  let text = "Anastasia";
   let letters = $state(text.toLowerCase().split(''));
   let started = $state(false);
   let timer = $state(0);
@@ -74,127 +74,178 @@
   <Row>
     <Grid>
         <Card col={12}>
-          <h1 class="title">Typing Test</h1>
-          <div class="letters">{letters.join('')}</div>
-          <input type="text" bind:value={input} placeholder="Start typing to begin"/>
-          <div class="controls">
-            <button class="btn" onclick={restart}>Restart</button>
-          </div>
-          <div class="timer">Time: {timer} seconds</div>
-          <div class="scores">
-            <h2>High Scores</h2>
-            <ul>
-              {#each scores as score}
-                <li>Score: {score.time} seconds at {new Date(score.now).toLocaleString()}</li>
-              {/each}
-            </ul>
+          <div class="container">
+            <h1 class="title">Speed Typing Test</h1>
+            <div class="letters">{letters.join('')}</div>
+            <input type="text" bind:value={input} placeholder="Start typing to begin"/>
+            <div class="controls">
+              <button class="btn" on:click={restart}>Restart</button>
+            </div>
+            <div class="timer">Time: {timer}ms</div>
+            <div class="scores">
+              <h2>High Scores</h2>
+              <ul>
+                {#each scores as score}
+                  <li>
+                    <span>Score: {score.time}ms at {new Date(score.now).toLocaleString()}</span>
+                    <button class="delete-btn" on:click={() => {
+                      scores = scores.filter(i => i !== score);
+                    }}>
+                      <span class="material-icons">delete</span>
+                    </button>
+                  </li>
+                {/each}
+              </ul>
+            </div>
           </div>
         </Card>
     </Grid>
   </Row>
 
 <style>
+  .container {
+    position: relative;
+    background-image: url('./photo1.png');
+    background-size: cover;
+    background-position: center;
+    padding: 3rem;
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    min-height: 90vh;
+  }
+
   .title {
-    color: #17a6ce;
+    color: #f8f9fa;
     text-align: center;
-    font-size: 2.8rem;
-    margin-bottom: 1.5rem;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 3.5rem;
+    margin-bottom: 2.5rem;
+    font-family: 'Inter', sans-serif;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    font-weight: 700;
   }
 
   .letters {
-    font-size: 1.8rem;
-    background: #fff8fa;
-    padding: 1.5rem;
-    border-radius: 15px;
-    margin: 1.5rem 0;
-    min-height: 70px;
-    box-shadow: inset 0 2px 8px rgba(255, 105, 180, 0.1);
-    border: 2px dashed #67d2db;
-    color: #4a4a4a;
+    font-size: 2.2rem;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 2.5rem;
+    border-radius: 16px;
+    margin: 2rem 0;
+    min-height: 100px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    color: #2d3436;
+    letter-spacing: 1px;
+    backdrop-filter: blur(8px);
   }
 
-  .controls {
-    display: flex;
-    gap: 1.2rem;
-    justify-content: center;
+  input {
+    width: 100%;
+    padding: 1.2rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.8);
+    font-size: 1.2rem;
     margin: 1.5rem 0;
+    color: #2d3436;
+    backdrop-filter: blur(8px);
+  }
+
+  input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.9);
   }
 
   .btn {
-    background: linear-gradient(145deg, #17a6ce, #17a6ce);
-    color: white;
+    background: rgba(45, 52, 54, 0.85);
+    color: #fff;
     border: none;
-    padding: 1rem 2rem;
-    border-radius: 25px;
+    padding: 1.2rem 3rem;
+    border-radius: 12px;
     cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: bold;
+    font-size: 1.2rem;
+    font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+    backdrop-filter: blur(8px);
   }
 
   .btn:hover {
-    background: linear-gradient(145deg, #17a6ce, #17a6ce);
+    background: rgba(45, 52, 54, 0.95);
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(124, 203, 231, 0.4);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   }
 
   .timer {
     text-align: center;
-    font-size: 1.4rem;
-    color: #17a6ce;
-    margin: 1.2rem 0;
-    font-weight: bold;
+    font-size: 2rem;
+    color: #f8f9fa;
+    margin: 2rem 0;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
   }
 
   .scores {
-    margin-top: 2.5rem;
-    background: #fff8fa;
-    padding: 1.5rem;
-    border-radius: 15px;
-    border: 2px solid #ffd6e6;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 2.5rem;
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
   }
 
   .scores h2 {
-    color: #17a6ce;
-    font-size: 1.8rem;
-    margin-bottom: 1.2rem;
+    color: #2d3436;
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
     text-align: center;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
   }
 
   .scores ul {
     list-style: none;
     padding: 0;
+    gap: 1.2rem;
+    display: flex;
+    flex-direction: column;
   }
 
   .scores li {
-    background: white;
-    padding: 1rem;
-    margin: 0.8rem 0;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1.4rem;
     border-radius: 12px;
-    color: #4a4a4a;
-    border: 1px solid #ffd6e6;
-    transition: transform 0.2s ease;
+    color: #2d3436;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   }
 
   .scores li:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.15);
+    transform: translateX(8px);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   }
 
-  @keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
+  .delete-btn {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    padding: 0.8rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .title {
-    animation: float 3s ease-in-out infinite;
+  .delete-btn:hover {
+    background: rgba(231, 76, 60, 0.1);
+    transform: scale(1.1);
   }
-  @media (min-width: 768px) {/*If the screen is greater than 768px, hide the input*/
+
+  @media (min-width: 768px) {
     input {
       display: none;
     }
