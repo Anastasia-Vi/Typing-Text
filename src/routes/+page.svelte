@@ -106,7 +106,7 @@
  </div>
 <style>
   .image {
-    background-image: url('./photo1.png');
+    background-image: url('/photo1.png');
     background-size: cover;
     background-position: center;
     padding: 3rem;
