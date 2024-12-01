@@ -56,6 +56,7 @@
     event.preventDefault();
     if(!event.key) return;
     if (event.key === 'Unidentified') return;
+    if (event.key === 'Backspace') return;
     input = input + event.key;
     if (input.length > 0) {
       if (input.length === 1) {
@@ -84,7 +85,7 @@
             <div class="letters">
               <span class="guesses">{guessesText.join('')}</span>{letters.join('')}
             </div>
-            <input type="text" bind:value={input} placeholder="Start typing to begin3"/>
+            <input type="text" bind:value={input} placeholder="Start typing to begin"/>
             <div class="controls">
               <button class="btn" onclick={restart}>Restart</button>
             </div>
