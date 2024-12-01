@@ -55,6 +55,7 @@
   function on_key_down(event){
     event.preventDefault();
     if(!event.key) return;
+    if (event.key === 'Unidentified') return;
     input = input + event.key;
     if (input.length > 0) {
       if (input.length === 1) {
@@ -83,10 +84,7 @@
             <div class="letters">
               <span class="guesses">{guessesText.join('')}</span>{letters.join('')}
             </div>
-            <input type="text" onbeforeinput={(event)=>{
-              event.preventDefault();//do not allow the user to type in the input field
-            }}
-            bind:value={input} placeholder="Start typing to begin2"/>
+            <input type="text" bind:value={input} placeholder="Start typing to begin3"/>
             <div class="controls">
               <button class="btn" onclick={restart}>Restart</button>
             </div>
