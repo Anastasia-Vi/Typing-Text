@@ -71,6 +71,7 @@
  on:keydown={on_key_down}/>
 
 
+ <div class="image">
   <Row>
     <Grid>
         <Card col={12}>
@@ -102,9 +103,9 @@
     </Grid>
   </Row>
 
+ </div>
 <style>
-  .container {
-    position: relative;
+  .image {
     background-image: url('./photo1.png');
     background-size: cover;
     background-position: center;
