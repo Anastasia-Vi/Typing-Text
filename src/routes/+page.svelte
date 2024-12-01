@@ -9,6 +9,7 @@
   let intervalId;
   let scores = $state(browser ? JSON.parse(localStorage.getItem('typingScores')) || [] : []);
   let input = $state('');
+  let guessesText = $state([]);
   $effect(() => {
     if (input.length > 0) {
       if (input.length === 1) {
@@ -24,6 +25,7 @@
     } 
     if (key === letters[0]) {
     //This is code check if the key pressed is the first letter of the array and if it is, it removes it from the array
+      guessesText = [...guessesText, key];
       letters = letters.slice(1);
       if (letters.length === 0) {
       const now = new Date();
@@ -45,6 +47,7 @@
   }
   function restart(){
     letters = text.toLowerCase().split('');
+    guessesText = []; 
     input = '';
     timer = 0;
     clearInterval(intervalId);
@@ -77,7 +80,9 @@
         <Card col={12}>
           <div class="container">
             <h1 class="title">Speed Typing Test</h1>
-            <div class="letters">{letters.join('')}</div>
+            <div class="letters">
+              <span class="guesses">{guessesText.join('')}</span>{letters.join('')}
+            </div>
             <input type="text" bind:value={input} placeholder="Start typing to begin"/>
             <div class="controls">
               <button class="btn" on:click={restart}>Restart</button>
@@ -105,6 +110,10 @@
 
  </div>
 <style>
+.guesses{
+  color: #2de73a;
+}
+
   .image {
     background-image: url('/photo1.png');
     background-size: cover;
@@ -155,7 +164,10 @@
     border-color: rgba(255, 255, 255, 0.5);
     background: rgba(255, 255, 255, 0.9);
   }
-
+  .controls{
+    display: flex;
+    justify-content: center;
+  }
   .btn {
     background: rgba(45, 52, 54, 0.85);
     color: #fff;
