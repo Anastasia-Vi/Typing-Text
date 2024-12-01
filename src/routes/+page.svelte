@@ -88,7 +88,7 @@
             }}
             bind:value={input} placeholder="Start typing to begin2"/>
             <div class="controls">
-              <button class="btn" on:click={restart}>Restart</button>
+              <button class="btn" onclick={restart}>Restart</button>
             </div>
             <div class="timer">Time: {timer}ms</div>
             <div class="scores">
@@ -97,7 +97,7 @@
                 {#each scores as score}
                   <li>
                     <span>Score: {score.time}ms at {new Date(score.now).toLocaleString()}</span>
-                    <button class="delete-btn" on:click={() => {
+                    <button class="delete-btn" onclick={() => {
                       scores = scores.filter(i => i !== score);
                     }}>
                       <span class="material-icons">delete</span>
