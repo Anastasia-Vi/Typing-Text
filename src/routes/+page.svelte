@@ -83,7 +83,10 @@
             <div class="letters">
               <span class="guesses">{guessesText.join('')}</span>{letters.join('')}
             </div>
-            <input type="text" bind:value={input} placeholder="Start typing to begin"/>
+            <input type="text" onbeforeinput={(event)=>{
+              event.preventDefault();
+            }}
+            bind:value={input} placeholder="Start typing to begin"/>
             <div class="controls">
               <button class="btn" on:click={restart}>Restart</button>
             </div>
