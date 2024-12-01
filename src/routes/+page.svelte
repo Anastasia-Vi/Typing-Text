@@ -72,7 +72,7 @@
 
 
  <div class="image">
-  <Row>
+  <Row noMargin>
     <Grid>
         <Card col={12}>
           <div class="container">
@@ -109,7 +109,6 @@
     background-image: url('/photo1.png');
     background-size: cover;
     background-position: center;
-    border-radius: 24px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
     min-height: 90vh;
   }
