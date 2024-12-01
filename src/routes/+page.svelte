@@ -133,6 +133,9 @@
     color: #2d3436;
     letter-spacing: 1px;
     backdrop-filter: blur(8px);
+    text-align: center;
+    padding: 0.25rem;
+    line-height: 100px;
   }
 
   input {
@@ -164,6 +167,7 @@
     font-weight: 600;
     transition: all 0.3s ease;
     backdrop-filter: blur(8px);
+    
   }
 
   .btn:hover {
